@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+
+  activemq:
+    image: webcenter/activemq:5.14.3
+    container_name: activemq
+    hostname: activemq
+    ports:
+      - 61616:61616
+      - 8161:8161
+    environment:
+      ACTIVEMQ_CONFIG_SCHEDULERENABLED: "true"
