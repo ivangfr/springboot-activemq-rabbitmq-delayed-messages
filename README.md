@@ -68,6 +68,14 @@ docker-compose up -d
       ivanfranchin/delayed-message-producer-consumer:1.0.0
     ```
 
+## Useful links
+
+- **ActiveMQ**
+
+  - Access http://localhost:8161
+  - Click `Manage ActiveMQ broker`
+  - To login, type `admin` for both username and password
+
 ## Shutdown
 
 - To stop `springboot-activemq-scheduler-load-testing` application, go to the terminal where it is running and press `Ctrl+C`

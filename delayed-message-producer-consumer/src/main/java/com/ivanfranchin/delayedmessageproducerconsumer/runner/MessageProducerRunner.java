@@ -1,6 +1,6 @@
 package com.ivanfranchin.delayedmessageproducerconsumer.runner;
 
-import com.ivanfranchin.delayedmessageproducerconsumer.jms.ActiveMQProducer;
+import com.ivanfranchin.delayedmessageproducerconsumer.activemq.ActiveMQProducer;
 import com.ivanfranchin.delayedmessageproducerconsumer.model.DelayedMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
