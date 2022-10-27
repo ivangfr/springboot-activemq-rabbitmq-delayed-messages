@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.jms.Message;
@@ -28,6 +29,7 @@ public class ActiveMQProducer {
     @Value("${activemq.queue.delayedMessage}")
     private String queue;
 
+    @Async
     public void sendMessage(DelayedMessage delayedMessage, Duration delay) {
         try {
             final String cmdStr = objectMapper.writeValueAsString(delayedMessage);
