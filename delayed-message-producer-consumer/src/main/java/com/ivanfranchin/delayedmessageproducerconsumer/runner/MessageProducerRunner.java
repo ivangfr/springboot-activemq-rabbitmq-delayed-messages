@@ -24,19 +24,15 @@ public class MessageProducerRunner implements CommandLineRunner {
     @Value("${app.simulate.messages-per-second}")
     private int messagesPerSecond;
 
-    @Value("${app.simulate.message-delay-minutes}")
-    private String messageDelayMinutes;
-
     @Override
     public void run(String... args) throws Exception {
         while (true) {
-            int iMessageDelayMinutes = messageDelayMinutes.isEmpty() ?
-                    random.nextInt(5) + 1 : Integer.parseInt(messageDelayMinutes);
+            int delayMinutes = random.nextInt(5) + 1;
             DelayedMessage delayedMessage = new DelayedMessage(
                     UUID.randomUUID().toString(),
-                    Instant.now().plus(iMessageDelayMinutes, ChronoUnit.MINUTES)
+                    Instant.now().plus(delayMinutes, ChronoUnit.MINUTES)
             );
-            activeMQProducer.sendMessage(delayedMessage, Duration.ofMinutes(iMessageDelayMinutes));
+            activeMQProducer.sendMessage(delayedMessage, Duration.ofMinutes(delayMinutes));
             Thread.sleep(1000 / messagesPerSecond);
         }
     }

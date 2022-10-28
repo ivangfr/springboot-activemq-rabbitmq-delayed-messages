@@ -8,7 +8,7 @@ The goal of this project is to load testing [ActiveMQ](https://activemq.apache.o
 
   [Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) application that produces and consumes messages with random delays.
 
-  The amount of messages per second produced can be specified using the environment variable `MESSAGES_PER_SECOND` (default is `10`).
+  The amount of messages per second produced can be specified using the environment variable `MESSAGES_PER_SECOND` (default is `100`).
 
 ## Prerequisites
 
@@ -43,13 +43,12 @@ docker-compose up -d
 
 - ### Environment variables
   
-| Environment Variable    | Description                                                                                                                    |
-|-------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| `ACTIVE_MQ_BROKER_URL`  | Specify URL of the ActiveMQ broker to use (default `tcp://localhost:61616`)                                                    |
-| `ACTIVE_MQ_USER`        | Specify user of the ActiveMQ broker (default `admin`)                                                                          |
-| `ACTIVE_MQ_PASSWORD`    | Specify password of the ActiveMQ broker (default `admin`)                                                                      |
-| `MESSAGE_DELAY_MINUTES` | Number of minutes to delay the message (default `1`). If the property is empty, a random number between 1 and 5 will be chosen |
-| `MESSAGES_PER_SECOND`   | Number of messages per second produced (default `10`)                                                                          |
+  | Environment Variable    | Description                                                                 |
+  |-------------------------|-----------------------------------------------------------------------------|
+  | `ACTIVE_MQ_BROKER_URL`  | Specify URL of the ActiveMQ broker to use (default `tcp://localhost:61616`) |
+  | `ACTIVE_MQ_USER`        | Specify user of the ActiveMQ broker (default `admin`)                       |
+  | `ACTIVE_MQ_PASSWORD`    | Specify password of the ActiveMQ broker (default `admin`)                   |
+  | `MESSAGES_PER_SECOND`   | Number of messages per second produced (default `100`)                      |
 
 - ### Start Docker container
 
