@@ -4,6 +4,7 @@ import com.ivanfranchin.delayedmessageproducerconsumer.activemq.ActiveMQProducer
 import com.ivanfranchin.delayedmessageproducerconsumer.model.DelayedMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
@@ -13,6 +14,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 @Component
+@ConditionalOnProperty(value = "app.producer.runner.active", havingValue = "true", matchIfMissing = true)
 public class MessageProducerRunner implements CommandLineRunner {
 
     private final ActiveMQProducer activeMQProducer;

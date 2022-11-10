@@ -43,12 +43,15 @@ docker-compose up -d
 
 - ### Environment variables
   
-  | Environment Variable    | Description                                                                 |
-  |-------------------------|-----------------------------------------------------------------------------|
-  | `ACTIVE_MQ_BROKER_URL`  | Specify URL of the ActiveMQ broker to use (default `tcp://localhost:61616`) |
-  | `ACTIVE_MQ_USER`        | Specify user of the ActiveMQ broker (default `admin`)                       |
-  | `ACTIVE_MQ_PASSWORD`    | Specify password of the ActiveMQ broker (default `admin`)                   |
-  | `MESSAGES_PER_SECOND`   | Number of messages per second produced (default `100`)                      |
+| Environment Variable      | Description                                                                 |
+|---------------------------|-----------------------------------------------------------------------------|
+| `ACTIVE_MQ_BROKER_URL`    | Specify URL of the ActiveMQ broker to use (default `tcp://localhost:61616`) |
+| `ACTIVE_MQ_USER`          | Specify user of the ActiveMQ broker (default `admin`)                       |
+| `ACTIVE_MQ_PASSWORD`      | Specify password of the ActiveMQ broker (default `admin`)                   |
+| `MESSAGES_PER_SECOND`     | Specify the number of messages per second to be produced (default `100`)    |
+| `PRODUCER_RUNNER_ACTIVE`  | Specify if producer runner is active to produce messages (default `true`)   |
+| `PRODUCER_LOGGING_ACTIVE` | Specify if application should log the messages produced (default `false`)   |
+| `CONSUMER_LOGGING_ACTIVE` | Specify if application should log the messages consumed (default `true`)    |
 
 - ### Start Docker container
 
