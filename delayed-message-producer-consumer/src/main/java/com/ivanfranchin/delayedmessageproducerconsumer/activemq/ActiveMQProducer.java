@@ -29,14 +29,14 @@ public class ActiveMQProducer {
     @Value("${activemq.queue.delayedMessage}")
     private String queue;
 
-    @Value("${app.producer.logging.active}")
-    private boolean producerLoggingActive;
+    @Value("${app.producer.logging.enabled}")
+    private boolean producerLoggingEnabled;
 
     @Async
     public void sendMessage(DelayedMessage delayedMessage, Duration delay) {
         try {
-            if (producerLoggingActive) {
-                log.info("Sending {} with delay of {}", delayedMessage, delay);
+            if (producerLoggingEnabled) {
+                log.info("Sending to ActiveMQ {} with delay of {}", delayedMessage, delay);
             }
             final String cmdStr = objectMapper.writeValueAsString(delayedMessage);
             jmsTemplate.send(queue, messageCreator -> {
@@ -46,7 +46,7 @@ public class ActiveMQProducer {
                 return message;
             });
         } catch (Exception e) {
-            log.error("An exception was thrown while sending message", e);
+            log.error("An exception was thrown while sending message to ActiveMQ", e);
         }
     }
 }

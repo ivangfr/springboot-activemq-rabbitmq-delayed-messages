@@ -16,13 +16,13 @@ public class ActiveMQConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(ActiveMQConsumer.class);
 
-    @Value("${app.consumer.logging.active}")
-    private boolean consumerLoggingActive;
+    @Value("${app.consumer.logging.enabled}")
+    private boolean consumerLoggingEnabled;
 
     @JmsListener(destination = "${activemq.queue.delayedMessage}")
     public void onMessage(@Payload DelayedMessage delayedMessage) {
-        if (consumerLoggingActive) {
-            log.info("Received {} with lag of {} ms",
+        if (consumerLoggingEnabled) {
+            log.info("Received from ActiveMQ {} with lag of {} ms",
                     delayedMessage,
                     Duration.between(delayedMessage.expectedReturnTime(), Instant.now()).toMillis());
         }

@@ -2,6 +2,7 @@ package com.ivanfranchin.delayedmessageproducerconsumer.runner;
 
 import com.ivanfranchin.delayedmessageproducerconsumer.activemq.ActiveMQProducer;
 import com.ivanfranchin.delayedmessageproducerconsumer.model.DelayedMessage;
+import com.ivanfranchin.delayedmessageproducerconsumer.rabbitmq.RabbitMQProducer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -14,14 +15,19 @@ import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 @Component
-@ConditionalOnProperty(value = "app.producer.runner.active", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "app.producer.runner.enabled", havingValue = "true", matchIfMissing = true)
 public class MessageProducerRunner implements CommandLineRunner {
 
     private final ActiveMQProducer activeMQProducer;
+    private final RabbitMQProducer rabbitMQProducer;
 
-    public MessageProducerRunner(ActiveMQProducer activeMQProducer) {
+    public MessageProducerRunner(ActiveMQProducer activeMQProducer, RabbitMQProducer rabbitMQProducer) {
         this.activeMQProducer = activeMQProducer;
+        this.rabbitMQProducer = rabbitMQProducer;
     }
+
+    @Value("${app.producer.send-to}")
+    private String sendTo;
 
     @Value("${app.simulate.messages-per-second}")
     private int messagesPerSecond;
@@ -34,7 +40,11 @@ public class MessageProducerRunner implements CommandLineRunner {
                     UUID.randomUUID().toString(),
                     Instant.now().plus(delayMinutes, ChronoUnit.MINUTES)
             );
-            activeMQProducer.sendMessage(delayedMessage, Duration.ofMinutes(delayMinutes));
+            if ("rabbitmq".equalsIgnoreCase(sendTo)) {
+                rabbitMQProducer.sendMessage(delayedMessage, Duration.ofMinutes(delayMinutes));
+            } else {
+                activeMQProducer.sendMessage(delayedMessage, Duration.ofMinutes(delayMinutes));
+            }
             Thread.sleep(1000 / messagesPerSecond);
         }
     }
