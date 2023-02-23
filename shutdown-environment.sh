@@ -12,7 +12,7 @@ docker rm -fv activemq rabbitmq
 echo
 echo "Removing network"
 echo "----------------"
-docker network rm springboot-activemq-scheduler-load-testing_default
+docker network rm springboot-activemq-rabbitmq-delayed-messages_default
 
 echo
 echo "Environment shutdown successfully"

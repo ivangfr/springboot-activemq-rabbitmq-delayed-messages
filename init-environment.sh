@@ -12,7 +12,7 @@ echo "===================="
 echo
 echo "Creating network"
 echo "----------------"
-docker network create springboot-activemq-scheduler-load-testing_default
+docker network create springboot-activemq-rabbitmq-delayed-messages_default
 
 echo
 echo "Starting ActiveMQ"
@@ -20,7 +20,7 @@ echo "-----------------"
 docker run -d --name activemq \
   -p 61616:61616 \
   -p 8161:8161 \
-  --network=springboot-activemq-scheduler-load-testing_default \
+  --network=springboot-activemq-rabbitmq-delayed-messages_default \
   webcenter/activemq:${ACTIVEMQ_VERSION}
 
 
@@ -39,7 +39,7 @@ docker run -d --name rabbitmq \
   -p 15672:15672 \
   -e RABBITMQ_DEFAULT_USER=admin \
   -e RABBITMQ_DEFAULT_PASS=admin \
-  --network=springboot-activemq-scheduler-load-testing_default \
+  --network=springboot-activemq-rabbitmq-delayed-messages_default \
   rabbitmq-delayed-message:${RABBITMQ_VERSION}
 
 echo

@@ -1,4 +1,4 @@
-# springboot-activemq-scheduler-load-testing
+# springboot-activemq-rabbitmq-delayed-messages
 
 The goal of this project is to handle delayed messages using [`ActiveMQ`](https://activemq.apache.org/) and [`RabbitMQ`](https://www.rabbitmq.com/). For it, we enable the scheduler in `ActiveMQ` and install, in `RabbitMQ`, the [Delayed Message Plugin](https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/).
 
@@ -18,14 +18,14 @@ The goal of this project is to handle delayed messages using [`ActiveMQ`](https:
 
 ## Initialize Environment
 
-Open a terminal and inside `springboot-activemq-scheduler-load-testing` root folder run
+Open a terminal and inside `springboot-activemq-rabbitmq-delayed-messages` root folder run
 ```
 ./init-environment.sh
 ```
 
 ## Running application with Maven
 
-- In a terminal, make sure you are inside `springboot-activemq-scheduler-load-testing` folder
+- In a terminal, make sure you are inside `springboot-activemq-rabbitmq-delayed-messages` folder
 - Run the following command
   ```
   ./mvnw clean spring-boot:run --projects delayed-message-producer-consumer
@@ -35,7 +35,7 @@ Open a terminal and inside `springboot-activemq-scheduler-load-testing` root fol
 
 - ### Build Docker image
 
-  - In a terminal, make sure you are inside `springboot-activemq-scheduler-load-testing` root folder
+  - In a terminal, make sure you are inside `springboot-activemq-rabbitmq-delayed-messages` root folder
   - Run the following script
     ```
     ./docker-build.sh
@@ -64,7 +64,7 @@ Open a terminal and inside `springboot-activemq-scheduler-load-testing` root fol
     docker run --rm --name delayed-message-producer-consumer \
       -e ACTIVEMQ_BROKER_URL=tcp://activemq:61616 \
       -e RABBITMQ_ADDRESSES=rabbitmq:5672 \
-      --network=springboot-activemq-scheduler-load-testing_default \
+      --network=springboot-activemq-rabbitmq-delayed-messages_default \
       ivanfranchin/delayed-message-producer-consumer:1.0.0
     ```
 
@@ -73,7 +73,7 @@ Open a terminal and inside `springboot-activemq-scheduler-load-testing` root fol
     docker run --rm --name delayed-message-producer-consumer-2 \
       -e ACTIVEMQ_BROKER_URL=tcp://activemq:61616 \
       -e RABBITMQ_ADDRESSES=rabbitmq:5672 \
-      --network=springboot-activemq-scheduler-load-testing_default \
+      --network=springboot-activemq-rabbitmq-delayed-messages_default \
       ivanfranchin/delayed-message-producer-consumer:1.0.0
     ```
 
@@ -92,14 +92,14 @@ Open a terminal and inside `springboot-activemq-scheduler-load-testing` root fol
 
 ## Shutdown
 
-- To stop `springboot-activemq-scheduler-load-testing` application, go to the terminal where it is running and press `Ctrl+C`
-- To stop and remove docker-compose containers, network and volumes, go to a terminal and, inside `springboot-activemq-scheduler-load-testing` root folder, run the following command
+- To stop `delayed-message-producer-consumer` application, go to the terminal where it is running and press `Ctrl+C`
+- To stop and remove docker-compose containers, network and volumes, go to a terminal and, inside `springboot-activemq-rabbitmq-delayed-messages` root folder, run the following command
   ```
   ./shutdown-environment.sh
   ```
 ## Cleanup
 
-To remove the Docker image create by this project, go to a terminal and, inside `springboot-activemq-scheduler-load-testing` root folder, run the following script
+To remove the Docker image create by this project, go to a terminal and, inside `springboot-activemq-rabbitmq-delayed-messages` root folder, run the following script
 ```
 ./remove-docker-images.sh
 ```

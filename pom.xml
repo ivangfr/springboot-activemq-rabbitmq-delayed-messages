@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>com.ivanfranchin</groupId>
-    <artifactId>springboot-activemq-scheduler-load-testing</artifactId>
+    <artifactId>springboot-activemq-rabbitmq-delayed-messages</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
-    <name>springboot-activemq-scheduler-load-testing</name>
+    <name>springboot-activemq-rabbitmq-delayed-messages</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
