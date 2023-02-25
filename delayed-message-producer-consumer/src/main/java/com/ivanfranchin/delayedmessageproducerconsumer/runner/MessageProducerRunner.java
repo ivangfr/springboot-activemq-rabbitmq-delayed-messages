@@ -3,6 +3,7 @@ package com.ivanfranchin.delayedmessageproducerconsumer.runner;
 import com.ivanfranchin.delayedmessageproducerconsumer.activemq.ActiveMQProducer;
 import com.ivanfranchin.delayedmessageproducerconsumer.model.DelayedMessage;
 import com.ivanfranchin.delayedmessageproducerconsumer.rabbitmq.RabbitMQProducer;
+import io.getunleash.Unleash;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -20,14 +21,13 @@ public class MessageProducerRunner implements CommandLineRunner {
 
     private final ActiveMQProducer activeMQProducer;
     private final RabbitMQProducer rabbitMQProducer;
+    private final Unleash unleash;
 
-    public MessageProducerRunner(ActiveMQProducer activeMQProducer, RabbitMQProducer rabbitMQProducer) {
+    public MessageProducerRunner(ActiveMQProducer activeMQProducer, RabbitMQProducer rabbitMQProducer, Unleash unleash) {
         this.activeMQProducer = activeMQProducer;
         this.rabbitMQProducer = rabbitMQProducer;
+        this.unleash = unleash;
     }
-
-    @Value("${app.producer.send-to}")
-    private String sendTo;
 
     @Value("${app.simulate.messages-per-second}")
     private int messagesPerSecond;
@@ -40,7 +40,7 @@ public class MessageProducerRunner implements CommandLineRunner {
                     UUID.randomUUID().toString(),
                     Instant.now().plus(delayMinutes, ChronoUnit.MINUTES)
             );
-            if ("rabbitmq".equalsIgnoreCase(sendTo)) {
+            if (unleash.isEnabled("rabbitMQEnabled")) {
                 rabbitMQProducer.sendMessage(delayedMessage, Duration.ofMinutes(delayMinutes));
             } else {
                 activeMQProducer.sendMessage(delayedMessage, Duration.ofMinutes(delayMinutes));

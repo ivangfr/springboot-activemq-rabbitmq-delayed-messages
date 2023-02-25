@@ -7,7 +7,7 @@ echo "================================="
 echo
 echo "Removing containers"
 echo "-------------------"
-docker rm -fv activemq rabbitmq
+docker rm -fv activemq rabbitmq unleash postgres
 
 echo
 echo "Removing network"
