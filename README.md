@@ -28,41 +28,17 @@ Open a terminal and inside `springboot-activemq-rabbitmq-delayed-messages` root 
 ```
 ./init-environment.sh
 ```
-
-## Configuring Unleash
-
-- Access Unleash website at http://localhost:4242
-- To login, type `admin` and `unleash4all` for username and password, respectively
-
-### Create Unleash API Key
-
-- On the main menu at the top, click `Configure` > `API Access`;
-- Click `New API token` button;
-- For the _Token name_ field, set `delayed-messages`;
-- Keep the remaining fields as they are. This way, we will create a API token for the `development` environment;
-- Click `Create token` button;
-- The token will be used to run the application [with Maven](#running-application-with-maven) or [with Docker container](#running-application-as-docker-container);
-- Click `Close` button.
-
-### Create feature toggle
-
-- On the main menu at the top, click `Feature toggles`;
-- Click `New feature toggle` button;
-- For the _Name_ field, set `rabbitMQEnabled`;
-- Keep the remaining fields as they are;
-- Click `Create feature toggle` button.
+> **Note**: this script, besides starting `ActiveMQ`, `RabbitMQ`, `Unleash` and `Postgres`, it will create in `Unleash` a feature toggle called `rabbitMQEnabled`. 
 
 ## Running application with Maven
 
 - In a terminal, make sure you are inside `springboot-activemq-rabbitmq-delayed-messages` folder
-- Export the Unleash API Key to the `UNLEASH_API_KEY` environment variable
-  ```
-  export UNLEASH_API_KEY=...
-  ```
 - Run the following command
   ```
-  ./mvnw clean spring-boot:run --projects delayed-message-producer-consumer
+  ./mvnw clean spring-boot:run --projects delayed-message-producer-consumer \
+    -Dspring-boot.run.jvmArguments="-Dunleash.api.key='*:development.some-random-string'"
   ```
+  > **Note**: the `UNLEASH_API_KEY` was created during the step [Initialize Environment](#initialize-environment)
 
 ## Running application as Docker container
 
@@ -76,58 +52,52 @@ Open a terminal and inside `springboot-activemq-rabbitmq-delayed-messages` root 
 
 - ### Environment variables
   
-| Environment Variable       | Description                                                                |
-|----------------------------|----------------------------------------------------------------------------|
+| Environment Variable       | Description                                                                 |
+|----------------------------|-----------------------------------------------------------------------------|
 | `ACTIVEMQ_BROKER_URL`      | Specify URL of the ActiveMQ broker to use (default `tcp://localhost:61616`) |
-| `ACTIVEMQ_USER`            | Specify user of the ActiveMQ broker (default `admin`)                      |
-| `ACTIVEMQ_PASSWORD`        | Specify password of the ActiveMQ broker (default `admin`)                  |
-| `RABBITMQ_ADDRESSES`       | Specify addresses of the RabbitMQ broker to use (default `localhost:5672`) |
-| `RABBITMQ_USER`            | Specify user of the RabbitMQ broker (default `admin`)                      |
-| `RABBITMQ_PASSWORD`        | Specify password of the RabbitMQ broker (default `admin`)                  |
-| `UNLEASH_API_URL`          | Specify URL of the Unleash to use (default `http://localhost:4242/api`)    |
-| `MESSAGES_PER_SECOND`      | Specify the number of messages per second to be produced (default `100`)   |
-| `PRODUCER_RUNNER_ENABLED`  | Specify if producer runner is enabled to produce messages (default `true`) |
-| `PRODUCER_LOGGING_ENABLED` | Specify if producer logging is enabled (default `false`)                   |
-| `CONSUMER_LOGGING_ENABLED` | Specify if consumer logging is enabled (default `true`)                    |
+| `ACTIVEMQ_USER`            | Specify user of the ActiveMQ broker (default `admin`)                       |
+| `ACTIVEMQ_PASSWORD`        | Specify password of the ActiveMQ broker (default `admin`)                   |
+| `RABBITMQ_ADDRESSES`       | Specify addresses of the RabbitMQ broker to use (default `localhost:5672`)  |
+| `RABBITMQ_USER`            | Specify user of the RabbitMQ broker (default `admin`)                       |
+| `RABBITMQ_PASSWORD`        | Specify password of the RabbitMQ broker (default `admin`)                   |
+| `UNLEASH_API_URL`          | Specify URL of the Unleash to use (default `http://localhost:4242/api`)     |
+| `UNLEASH_API_KEY`          | Specify API key of the Unleash to use (default `change-me`)                 |
+| `MESSAGES_PER_SECOND`      | Specify the number of messages per second to be produced (default `1`)      |
+| `PRODUCER_RUNNER_ENABLED`  | Specify if producer runner is enabled to produce messages (default `true`)  |
+| `PRODUCER_LOGGING_ENABLED` | Specify if producer logging is enabled (default `false`)                    |
+| `CONSUMER_LOGGING_ENABLED` | Specify if consumer logging is enabled (default `true`)                     |
 
 - ### Start Docker container
 
-  - In a terminal, set the Unleash API Key to the `UNLEASH_API_KEY` environment variable
-    ```
-    UNLEASH_API_KEY=...
-    ```
-  - Run the following command to start the Docker container
+  - In a terminal, run the following command
     ```
     docker run --rm --name delayed-message-producer-consumer \
       -e ACTIVEMQ_BROKER_URL=tcp://activemq:61616 \
       -e RABBITMQ_ADDRESSES=rabbitmq:5672 \
       -e UNLEASH_API_URL=http://unleash:4242/api \
-      -e UNLEASH_API_KEY=$UNLEASH_API_KEY \
+      -e UNLEASH_API_KEY='*:development.some-random-string' \
+      --network=springboot-activemq-rabbitmq-delayed-messages_default \
+      ivanfranchin/delayed-message-producer-consumer:1.0.0
+    ```
+    > **Note**: the `UNLEASH_API_KEY` was created during the step [Initialize Environment](#initialize-environment)
+
+  - \[Optional\] To start a 2nd Docker container, in another terminal, run the command below
+    ```
+    docker run --rm --name delayed-message-producer-consumer-2 \
+      -e ACTIVEMQ_BROKER_URL=tcp://activemq:61616 \
+      -e RABBITMQ_ADDRESSES=rabbitmq:5672 \
+      -e UNLEASH_API_URL=http://unleash:4242/api \
+      -e UNLEASH_API_KEY='*:development.some-random-string' \
       --network=springboot-activemq-rabbitmq-delayed-messages_default \
       ivanfranchin/delayed-message-producer-consumer:1.0.0
     ```
 
-  - \[Optional\] To start a 2nd Docker container
-    - In another terminal, set the Unleash API Key to the `UNLEASH_API_KEY` environment variable
-      ```
-      UNLEASH_API_KEY=...
-      ``` 
-    - Run the following command
-      ```
-      docker run --rm --name delayed-message-producer-consumer-2 \
-        -e ACTIVEMQ_BROKER_URL=tcp://activemq:61616 \
-        -e RABBITMQ_ADDRESSES=rabbitmq:5672 \
-        -e UNLEASH_API_URL=http://unleash:4242/api \
-        -e UNLEASH_API_KEY=$UNLEASH_API_KEY \
-        --network=springboot-activemq-rabbitmq-delayed-messages_default \
-        ivanfranchin/delayed-message-producer-consumer:1.0.0
-      ```
-
 ## Switching Delayed Message Brokers
 
 - Access Unleash website at http://localhost:4242
-- To login, type `admin` and `unleash4all` for username and password, respectively
-- In the main page, you should see the `rabbitMQEnabled` feature toggle;
+- To login, type `admin` and `unleash4all` for username and password, respectively;
+- In `Projects` page, select `Default`;
+- You should see the `rabbitMQEnabled` feature toggle;
   ![unleash-rabbitmqenabled](documentation/unleash-rabbitmqenabled.jpeg)
 - The API token provided to `delayed-messages-producer-consumer`, was created to `development` environment. So, if the `development` checkbox is enabled, the messages will be sent to `RabbitMQ`; otherwise, they will go to `ActiveMQ`.
 
