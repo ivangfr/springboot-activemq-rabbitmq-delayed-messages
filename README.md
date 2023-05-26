@@ -1,6 +1,6 @@
 # springboot-activemq-rabbitmq-delayed-messages
 
-The goal of this project is to create an application that produces and consumes messages with random delays. Those messages are sent and handled by delayed message brokers.
+The goal of this project is to create an application that produces and consumes delayed messages randomly. Those messages are sent to ActiveMQ or RabbitMQ. The delayed broker to which the message is sent depends on a feature toggle defined in Unleash.
 
 ## Project diagram
 

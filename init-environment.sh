@@ -2,10 +2,10 @@
 
 source scripts/my-functions.sh
 
-POSTGRES_VERSION="15.2"
-UNLEASH_VERSION="4.21.0"
+POSTGRES_VERSION="15.3"
+UNLEASH_VERSION="5.1.2"
 ACTIVEMQ_VERSION="5.14.3"
-RABBITMQ_VERSION="3.11.9-management"
+RABBITMQ_VERSION="3.11.16-management"
 
 ADMIN_API_TOKEN="*:*.some-random-string"
 CLIENT_API_TOKEN="*:development.some-random-string"

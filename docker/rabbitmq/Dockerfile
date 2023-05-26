@@ -1,4 +1,4 @@
-FROM rabbitmq:3.11.9-management
+FROM rabbitmq:3.11.16-management
 
 LABEL maintainer="ivangfr@yahoo.com.br" description="RabbitMQ + Delayed Message Plugin"
 
