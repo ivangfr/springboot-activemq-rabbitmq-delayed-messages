@@ -10,7 +10,8 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import javax.jms.Message;
+import jakarta.jms.Message;
+
 import java.time.Duration;
 
 @Component

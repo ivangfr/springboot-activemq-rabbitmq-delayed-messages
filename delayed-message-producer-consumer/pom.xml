@@ -15,8 +15,8 @@
 
     <properties>
         <java.version>17</java.version>
-        <spring-cloud.version>2021.0.7</spring-cloud.version>
-        <unleash-client-java.version>7.1.0</unleash-client-java.version>
+        <spring-cloud.version>2022.0.3</spring-cloud.version>
+        <unleash-client-java.version>8.2.0</unleash-client-java.version>
     </properties>
 
     <dependencies>
@@ -68,10 +68,8 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-stream</artifactId>
+            <artifactId>spring-cloud-stream-test-binder</artifactId>
             <scope>test</scope>
-            <classifier>test-binder</classifier>
-            <type>test-jar</type>
         </dependency>
     </dependencies>
 
