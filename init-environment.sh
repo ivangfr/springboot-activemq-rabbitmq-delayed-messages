@@ -3,7 +3,7 @@
 source scripts/my-functions.sh
 
 POSTGRES_VERSION="16.1"
-UNLEASH_VERSION="5.1.9"
+UNLEASH_VERSION="5.11.2"
 ACTIVEMQ_VERSION="5.14.3"
 RABBITMQ_VERSION="3.13.1-management"
 
