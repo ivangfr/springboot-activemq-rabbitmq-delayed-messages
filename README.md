@@ -22,9 +22,8 @@ Furthermore, in order to easily switch the delayed message broker to where the m
 
 ## Prerequisites
 
-- [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
+- [`Java 21+`](https://www.oracle.com/java/technologies/downloads/#java21)
 - [`Docker`](https://www.docker.com/)
-- [`Docker-Compose`](https://docs.docker.com/compose/install/)
 
 ## Initialize Environment
 
@@ -100,7 +99,7 @@ Open a terminal and inside `springboot-activemq-rabbitmq-delayed-messages` root 
 
 - Access Unleash website at http://localhost:4242
 - To login, type `admin` and `unleash4all` for username and password, respectively;
-- In `Projects` page, select `Default`;
+- In `My projects`, select `Default`;
 - You should see the `rabbitMQEnabled` feature toggle;
   ![unleash-rabbitmqenabled](documentation/unleash-rabbitmqenabled.jpeg)
 - The API token provided to `delayed-messages-producer-consumer`, was created to `development` environment. So, if the `development` checkbox is enabled, the messages will be sent to `RabbitMQ`; otherwise, they will go to `ActiveMQ`.
