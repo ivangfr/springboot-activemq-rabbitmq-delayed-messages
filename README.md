@@ -12,7 +12,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ## Applications
 
-`delayed-message-producer-consumer` is a [Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) Java application that produces and consumes messages with random delays.
+`delayed-message-producer-consumer` is a [Spring Boot](https://docs.spring.io/spring-boot/index.html) Java application that produces and consumes messages with random delays.
 
 These delayed messages are sent to [`ActiveMQ`](https://activemq.apache.org/) or [`RabbitMQ`](https://www.rabbitmq.com/) brokers.
 
