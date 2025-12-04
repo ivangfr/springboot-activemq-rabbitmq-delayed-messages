@@ -1,7 +1,7 @@
 package com.ivanfranchin.delayedmessageproducerconsumer.activemq;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ivanfranchin.delayedmessageproducerconsumer.model.DelayedMessage;
+import jakarta.jms.Message;
 import org.apache.activemq.ScheduledMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
-import jakarta.jms.Message;
+import tools.jackson.databind.ObjectMapper;
 
 import java.time.Duration;
 

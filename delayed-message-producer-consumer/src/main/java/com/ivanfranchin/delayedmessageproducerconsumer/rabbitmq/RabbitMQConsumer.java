@@ -16,7 +16,7 @@ public class RabbitMQConsumer {
     private static final Logger log = LoggerFactory.getLogger(RabbitMQConsumer.class);
 
     @Bean
-    public Consumer<DelayedMessage> delayedMessage() {
+    Consumer<DelayedMessage> delayedMessage() {
         return delayedMessage -> log.info("Received from RabbitMQ {} with lag of {} ms",
                 delayedMessage,
                 Duration.between(delayedMessage.expectedReturnTime(), Instant.now()).toMillis());

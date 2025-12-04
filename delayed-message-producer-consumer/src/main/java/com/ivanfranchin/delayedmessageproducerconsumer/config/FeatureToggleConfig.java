@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Configuration;
 public class FeatureToggleConfig {
 
     @Bean
-    public Unleash unleash(@Value("${spring.application.name}") String appName,
-                           @Value("${unleash.api.url}") String unleashApiUrl,
-                           @Value("${unleash.api.key}") String unleashApiKey) {
+    Unleash unleash(@Value("${spring.application.name}") String appName,
+                    @Value("${unleash.api.url}") String unleashApiUrl,
+                    @Value("${unleash.api.key}") String unleashApiKey) {
         UnleashConfig config = UnleashConfig.builder()
                 .appName(appName)
                 .unleashAPI(unleashApiUrl)
