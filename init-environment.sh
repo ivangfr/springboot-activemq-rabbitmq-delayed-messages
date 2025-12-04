@@ -4,7 +4,7 @@ source scripts/my-functions.sh
 
 POSTGRES_VERSION="18.0"
 UNLEASH_VERSION="7.3.0"
-ACTIVEMQ_VERSION="5.14.3"
+ACTIVEMQ_VERSION="6.2.0"
 RABBITMQ_VERSION="4.2.1-management"
 
 ADMIN_API_TOKEN="*:*.some-random-string"
@@ -56,10 +56,11 @@ echo "-----------------"
 docker run -d --name activemq \
   -p 61616:61616 \
   -p 8161:8161 \
+  -v $(pwd)/docker/activemq/activemq.xml:/opt/apache-activemq/conf/activemq.xml \
   --restart=unless-stopped \
   --network=springboot-activemq-rabbitmq-delayed-messages_default \
   --health-cmd="curl -f localhost:8161 || exit 1" \
-  webcenter/activemq:${ACTIVEMQ_VERSION}
+  apache/activemq-classic:${ACTIVEMQ_VERSION}
 
 if [[ "$(docker images -q rabbitmq-delayed-message:${RABBITMQ_VERSION} 2> /dev/null)" == "" ]]; then
   echo
@@ -85,7 +86,7 @@ echo
 wait_for_container_log "unleash" "Unleash has started"
 
 echo
-wait_for_container_log "activemq" "activemq entered RUNNING state"
+wait_for_container_log "activemq" "ActiveMQ WebConsole available"
 
 echo
 wait_for_container_log "rabbitmq" "Server startup complete"
