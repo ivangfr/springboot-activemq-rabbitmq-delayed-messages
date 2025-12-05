@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import tools.jackson.databind.ObjectMapper;
 
 import java.time.Duration;
 
@@ -19,11 +18,9 @@ public class ActiveMQProducer {
     private static final Logger log = LoggerFactory.getLogger(ActiveMQProducer.class);
 
     private final JmsTemplate jmsTemplate;
-    private final ObjectMapper objectMapper;
 
-    public ActiveMQProducer(JmsTemplate jmsTemplate, ObjectMapper objectMapper) {
+    public ActiveMQProducer(JmsTemplate jmsTemplate) {
         this.jmsTemplate = jmsTemplate;
-        this.objectMapper = objectMapper;
     }
 
     @Value("${activemq.queue.delayedMessage}")
@@ -38,10 +35,8 @@ public class ActiveMQProducer {
             if (producerLoggingEnabled) {
                 log.info("Sending to ActiveMQ {} with delay of {}", delayedMessage, delay);
             }
-            final String cmdStr = objectMapper.writeValueAsString(delayedMessage);
             jmsTemplate.send(queue, messageCreator -> {
-                Message message = messageCreator.createTextMessage(cmdStr);
-                message.setObjectProperty("_type", delayedMessage.getClass().getName());
+                Message message = messageCreator.createObjectMessage(delayedMessage);
                 message.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_DELAY, delay.toMillis());
                 return message;
             });

@@ -1,11 +1,7 @@
 package com.ivanfranchin.delayedmessageproducerconsumer.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
+import java.io.Serializable;
 import java.time.Instant;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes(@JsonSubTypes.Type(value = DelayedMessage.class, name = "DelayedMessage"))
-public record DelayedMessage(String id, Instant expectedReturnTime) {
+public record DelayedMessage(String id, Instant expectedReturnTime) implements Serializable {
 }
