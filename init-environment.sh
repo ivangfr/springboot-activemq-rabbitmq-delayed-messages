@@ -5,7 +5,7 @@ source scripts/my-functions.sh
 POSTGRES_VERSION="18.0"
 UNLEASH_VERSION="7.3.0"
 ACTIVEMQ_VERSION="6.2.0"
-RABBITMQ_VERSION="4.2.1-management"
+RABBITMQ_VERSION="4.0.2-management"
 
 ADMIN_API_TOKEN="*:*.some-random-string"
 CLIENT_API_TOKEN="*:development.some-random-string"
